@@ -136,7 +136,7 @@ type ExperimentEntry = {
 
 ## 4. AI Chatbot — RAG Pipeline (plan.md 2.4)
 
-**Embedding model: Voyage AI `voyage-3-lite`** (1024-dim). Chosen over OpenAI `text-embedding-3-small` to keep the pipeline in the Anthropic-adjacent ecosystem — Voyage is Anthropic's recommended embedding partner — which fits the case study's "intentional model choices" narrative better than mixing in an OpenAI dependency for just the retrieval step.
+**Embedding model: Voyage AI `voyage-3-lite`** (512-dim — confirmed against the live API during Step 2; `voyage-3-lite` only accepts `output_dimension: 512`, not 1024 as originally assumed here). Chosen over OpenAI `text-embedding-3-small` to keep the pipeline in the Anthropic-adjacent ecosystem — Voyage is Anthropic's recommended embedding partner — which fits the case study's "intentional model choices" narrative better than mixing in an OpenAI dependency for just the retrieval step.
 
 ```
 POST /api/chat
@@ -160,11 +160,11 @@ At this data scale — a resume, profile, and a couple of project writeups, like
 create table documents (
   id bigint primary key generated always as identity,
   content text,
-  embedding vector(1024),   -- voyage-3-lite output dimension
+  embedding vector(512),    -- voyage-3-lite output dimension (confirmed via live API)
   metadata jsonb            -- {source: "resume.md", section: "experience"}
 );
 -- No ivfflat/hnsw index: knowledge base is small (low hundreds of chunks at most),
--- a sequential scan over vector(1024) outperforms an ANN index at this scale.
+-- a sequential scan over vector(512) outperforms an ANN index at this scale.
 ```
 
 ### Guardrails (non-negotiable before public, per plan.md 2.4)
