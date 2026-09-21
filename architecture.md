@@ -173,6 +173,7 @@ create table documents (
 - Per-IP rate limiting on `/api/chat` to cap cost exposure from bots/abuse.
 - Scope refusal for questions unrelated to Satvik's background.
 - Adversarial self-testing before the chatbot is public on a real domain.
+- **Pre-launch TODO:** add a payment method to the Voyage AI account (dashboard.voyageai.com) before going live — without one, Voyage throttles to 3 RPM / 10K TPM, which will bottleneck real traffic. The 200M free tokens for Voyage series 3 still apply once a card is on file. Confirmed via testing during Step 3 (RAG pipeline MVP): the pipeline itself works correctly, this is purely an account-level rate limit.
 
 ---
 

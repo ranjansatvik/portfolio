@@ -5,12 +5,11 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { config } from "dotenv";
 import WebSocket from "ws";
+import { embedDocuments } from "../lib/chatbot/embed";
 
 config({ path: path.join(process.cwd(), ".env.local") });
 
 const KNOWLEDGE_DIR = path.join(process.cwd(), "content", "knowledge");
-const VOYAGE_MODEL = "voyage-3-lite";
-const VOYAGE_URL = "https://api.voyageai.com/v1/embeddings";
 
 type Chunk = {
   content: string;
@@ -44,31 +43,6 @@ function chunkMarkdown(source: string, raw: string): Chunk[] {
   return chunks;
 }
 
-async function embed(texts: string[]): Promise<number[][]> {
-  const apiKey = process.env.VOYAGE_API_KEY;
-  if (!apiKey) throw new Error("Missing VOYAGE_API_KEY env var");
-
-  const res = await fetch(VOYAGE_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      input: texts,
-      model: VOYAGE_MODEL,
-      input_type: "document",
-    }),
-  });
-
-  if (!res.ok) {
-    throw new Error(`Voyage embed request failed: ${res.status} ${await res.text()}`);
-  }
-
-  const data = (await res.json()) as { data: { embedding: number[] }[] };
-  return data.data.map((d) => d.embedding);
-}
-
 async function main() {
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -94,7 +68,7 @@ async function main() {
   console.log(`Chunked ${files.length} file(s) into ${allChunks.length} chunks.`);
 
   // Voyage's batch limit is generous; a knowledge base this size fits in one request.
-  const embeddings = await embed(allChunks.map((c) => c.content));
+  const embeddings = await embedDocuments(allChunks.map((c) => c.content));
 
   const rows = allChunks.map((chunk, i) => ({
     content: chunk.content,
