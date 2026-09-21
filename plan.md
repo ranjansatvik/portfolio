@@ -205,8 +205,8 @@ A first draft, adapted from the resume/profile already built in this conversatio
 
 ### 3.3 Proof — draft ready, pending your confirmation of exact numbers
 Only substantiated numbers go here. Candidates from what's already known:
-- CryptoCast dataset size (confirm exact figure — "600K+ observations" was mentioned once, verify against the actual dataset before publishing)
-- LSTM R² score — `0.9933`
+- CryptoCast dataset size — **confirmed against the research paper: 4,700+ observations** (13 years of daily BTC closing prices from Investing.com). The earlier "600K+" figure was an unverified placeholder and is wrong by roughly two orders of magnitude — do not use it anywhere.
+- LSTM R² score — `0.9933` (confirmed against the research paper, Table 1: RMSE 2133.43, MAE 1626.07)
 - Smart India Hackathon — 2 participations, Round 2 qualifier (2024)
 - Semesters completed — 8 (Sep 2022 – Jun 2026)
 - 1,000+ users onboarded (ArkN Global platform)
