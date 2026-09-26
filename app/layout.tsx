@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import CommandMenu from "@/components/ui/CommandMenu";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Nav />
         {children}
         <Footer />
+        <CommandMenu />
       </body>
     </html>
   );

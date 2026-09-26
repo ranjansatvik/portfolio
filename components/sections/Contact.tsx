@@ -1,3 +1,5 @@
+import MagneticButton from "@/components/ui/MagneticButton";
+
 const LINKS = [
   { label: "Email", href: "mailto:satvikranjan1@gmail.com", display: "satvikranjan1@gmail.com" },
   { label: "GitHub", href: "https://github.com/ranjansatvik", display: "github.com/ranjansatvik" },
@@ -19,13 +21,13 @@ export default function Contact() {
         Let&apos;s build something.
       </h2>
 
-      <a
+      <MagneticButton
         href="/resume.pdf"
         download
-        className="mt-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-black transition hover:brightness-110"
+        className="mt-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-black hover:brightness-110"
       >
         Download Resume
-      </a>
+      </MagneticButton>
 
       <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-sm text-zinc-400">
         {LINKS.map((link) => (

@@ -23,6 +23,9 @@ export default function Nav() {
               Contact
             </a>
           </li>
+          <li className="hidden font-mono text-xs text-zinc-600 sm:block" aria-hidden="true">
+            ⌘K
+          </li>
         </ul>
       </nav>
     </header>
